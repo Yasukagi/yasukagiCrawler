@@ -1,7 +1,11 @@
 # Abstract
 Yasuikagiyaのために、情報を逐次クローリングしてくるクローラー
-# steamcrowler
+# steamappcrowler
 steamのアプリケーションidと名前を取得し、データベースに格納するpythonアプリケーション
 Main.pyを実行する
-格納するデータベースはtestで、ログインuser名はroot.テーブル名前はyasukagi_game
-仕様はこちら: https://github.com/Yasukagi/yasukagiCrawler/wiki/データベース設計
+格納するデータベースはtestで、ログインuser名はroot.テーブル名前はyasukagi_game  
+データベース仕様はこちら: https://github.com/Yasukagi/yasukagiCrawler/wiki/データベース設計
+
+# steampricecrowler
+steamappcrowlerで集めたアプリケーションidにもとづいて、価格とゲームかどうかを判定して結果をyasukagi_gameに格納するpythonアプリケーション
+実装メソッド
