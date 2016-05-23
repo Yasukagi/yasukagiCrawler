@@ -20,7 +20,7 @@ def crowl_prices(appList):
     #steamのストアフロントapiのパラメータのappidはcsvに設定できるので、250個ほどのappidをcsvにまとめている。(500だと蹴られる)
     print "appidをまとめています"
     for i in xrange(len(appList)):
-        if i % 250 == 0:
+        if i % 250 == 0 or i == len(appList):
             appids.append(appidspart)
             appidspart = ""
         appidspart = appidspart + json.dumps(appList[i][0]) + ","

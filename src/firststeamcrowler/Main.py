@@ -3,7 +3,7 @@ import firststeamcrowler.steamappcrowler.Crowler as appCrowler
 import firststeamcrowler.steamappcrowler.DatabaseSetter as appDataSetter
 import firststeamcrowler.steampricecrowler.Crowler as priceCrowler
 import firststeamcrowler.steampricecrowler.DatabaseGetter as priceDataGetter
-import firststeamcrowler.steampricecrowler.DatabaseSetter as priceDataSetter
+import firststeamcrowler.steampricecrowler.DatabaseSetter as priceDataSettera
 #とりあえず最初に走らせるのがこのfirststeamcrowlerのMain.py
 #これを走らせてdatabaseを初期化しよう
 # constant
