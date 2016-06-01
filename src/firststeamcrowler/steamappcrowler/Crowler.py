@@ -11,7 +11,7 @@ def crowlApp():
     steamAppResponse = ul2.urlopen("http://api.steampowered.com/ISteamApps/GetAppList/v0001/")
     #steamAppResponseはapplist{apps{app[{appid,name},...]}}}となっている
     steamAppJson = json.load(steamAppResponse)
-    appList = steamAppJson['applist']['apps']['app']
+    appList = steamAppJson['applist']['apps']['app' ]
     return appList
 
 
