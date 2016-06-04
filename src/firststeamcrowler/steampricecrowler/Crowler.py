@@ -29,7 +29,7 @@ def crowl_prices(appList):
 
     print "steamの価格を取り寄せています...."
     #steamのストアフロントapiからappの価格を取り寄せてくる部分
-    for i in xrange(len(appids)):
+    for i in range(len(appids)):
         steamPriceResponse = ul2.urlopen('http://store.steampowered.com/api/appdetails/?appids=' + appids[i] + '&filters=price_overview')
         unko = json.load(steamPriceResponse)
         steamPriceJson.update(unko)
