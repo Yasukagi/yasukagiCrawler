@@ -13,7 +13,7 @@ steamAppJson = json.load(response)
 appList = steamAppJson['applist']['apps']['app']
 
 
-for i in xrange(len(app_List_before)):
+for i in range(len(app_List_before)):
     sql = "UPDATE yasukagi_game SET steam_app_List_before "
     cursor.execute()
 
@@ -22,5 +22,5 @@ for i in range(len(app_List_before), len(appList)):
 
 
 
-print len(app_List_before)
-print len(appList)
+    print(len(app_List_before))
+    print(len(appList))

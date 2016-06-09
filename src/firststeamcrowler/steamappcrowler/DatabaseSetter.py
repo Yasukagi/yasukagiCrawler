@@ -9,15 +9,15 @@ DB_USER = "root"
 
 #appidとnameのキーのセット(api.steampowered)
 def set_database(appList):
-    print "データベースに接続しています..."
+    print("データベースに接続しています...")
     connection = MySQLdb.connect(host='localhost', user="root", db="test", charset='utf8')
-    print "success to connect"
+    print("success to connect")
     cursor = connection.cursor()
 
     #header_string = 'game_title', 'game_price_steam', 'time_stamp'
     #print header_string
     #values = 'fuck', 0.0, timestring
-    print "データベースにappidおよびnameを登録しています"
+    print("データベースにappidおよびnameを登録しています")
     for app in appList:
         appid = json.dumps(app['appid'])
         name = json.dumps(app['name'])
