@@ -18,7 +18,8 @@ class Store:
     ["appid":{"success":, "data":{['supported_languages', 'categories', 'packages', 'metacritic', 'mac_requirements', 'steam_appid', 'recommendations', 'required_age', 'linux_requirements', 'is_free', 'background', 'name', 'release_date', 'support_info', 'developers', 's', 'publishers', 'type', 'achievements', 'pc_requirements', 'header_image', 'package_groups', 'about_the_game', 'screenshots', 'price_overview', 'detailed_description', 'website', 'controller_support', 'movies', 'genres']}}]
     """
     def appdetails(self, appid):
-        url = 'http://store.steampowered.com/api/appdetails/?appids=' + appid
+        time.sleep(1.6)
+        url = 'http://store.steampowered.com/api/appdetails/?appids=' + str(appid)
         try:
             response = ulr.urlopen(url)
         except:
@@ -45,17 +46,20 @@ class Store:
     @:param appids appidをcsv形式で入力
     """
     def appprices(self, appids):
+        time.sleep(1.6)
         url = 'http://store.steampowered.com/api/appdetails/?appids=' + appids + '&filters=price_overview'
         try:
             response = ulr.urlopen(url)
-        except:
-            print("http error")
+        except ulr.URLError as e:
+            print("http error", e)
             return
 
         try:
-            apppricesJson = json.loads(response.read().decode("utf-8"))
+            response_str = response.read()
+            apppricesJson = json.loads(response_str.decode("utf-8"))
         except:
             print("json parse error")
+        print(apppricesJson)
         return apppricesJson
 
 """["appid":{"success":, "data":{['supported_languages', 'categories', 'packages', 'metacritic', 'mac_requirements', 'steam_appid', 'recommendations', 'required_age', 'linux_requirements', 'is_free', 'background', 'name', 'release_date', 'support_info', 'developers', 'platforms', 'publishers', 'type', 'achievements', 'pc_requirements', 'header_image', 'package_groups', 'about_the_game', 'screenshots', 'price_overview', 'detailed_description', 'website', 'controller_support', 'movies', 'genres']}}]"""
@@ -78,7 +82,8 @@ class AppDetails:
         """
         このゲームが含むsteam上の要素を示す。形式はjson。実績に対応しているか、マルチプレイヤーかなどを示す。
         例:[{'id': 1, 'description': 'Multi-player'}, {'id': 27, 'description': 'Cross-Platform Multiplayer'}, {'id': 22, 'description': 'Steam Achievements'}, {'id': 23, 'description': 'Steam Cloud'}, {'id': 8, 'description': 'Valve Anti-Cheat enabled'}, {'id': 15, 'description': 'Stats'}, {'id': 16, 'description': 'Includes Source SDK'}]
-        categories用のデータベースを作ったほうがよいかもしれない。
+        relay
+        categories用のデータベースを作ったほうがよいかもしれない
         """
         if "categories" in appdetails:
             self.categories = appdetails["categories"]
@@ -120,7 +125,7 @@ class AppDetails:
         """
         好評価している数
         int
-        [36]
+        例:{'total': 51914}
         """
         if "recommendations" in appdetails:
             self.recommendations = appdetails["recommendations"]
@@ -196,6 +201,7 @@ class AppDetails:
         """
         developer name array
         String
+        relay
         ['Valve']
         """
         if "developers" in appdetails:
@@ -205,6 +211,7 @@ class AppDetails:
         """
         publishers name array
         String
+        relay
         ['Valve']
         """
         if "publishers" in appdetails:
@@ -221,7 +228,7 @@ class AppDetails:
         else:
             self.achievements = {}
         """
-        pc requriments.
+        pc_requirements.
         String
         {'minimum': '\r\n\t\t\t<p><strong>Minimum: </strong>1.7 GHz Processor, 512MB RAM, DirectX&reg; 8.1 level Graphics Card (Requires support for SSE), Windows&reg; 7 (32/64-bit)/Vista/XP, Mouse, Keyboard, Internet Connection</p>\r\n\t\t\t<p><strong>Recommended: </strong>Pentium 4 processor (3.0GHz, or better), 1GB RAM, DirectX&reg; 9 level Graphics Card, Windows&reg; 7 (32/64-bit)/Vista/XP, Mouse, Keyboard, Internet Connection</p>\r\n\t\t\t'}
         """
@@ -241,6 +248,7 @@ class AppDetails:
         """
         package_groups : i dont understand what this return
         String
+        保留
         [{'selection_text': 'Select a purchase option', 'save_text': '', 'name': 'default', 'title': 'Buy Counter-Strike: Source', 'subs': [{'packageid': 37, 'is_free_license': False, 'option_text': 'Counter-Strike: Source - ¥ 1,980', 'can_get_free_license': '0', 'option_description': '', 'percent_savings': 0, 'percent_savings_text': '', 'price_in_cents_with_discount': 198000}], 'display_type': 0, 'description': '', 'is_recurring_subscription': 'false'}]
         """
         if "package_groups" in appdetails:
@@ -259,6 +267,7 @@ class AppDetails:
         """
         screenshots url of game profile
         String
+        使わない
         [{'path_full': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000027.1920x1080.jpg?t=1448314295', 'path_thumbnail': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000027.600x338.jpg?t=1448314295', 'id': 0}, {'path_full': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000028.1920x1080.jpg?t=1448314295', 'path_thumbnail': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000028.600x338.jpg?t=1448314295', 'id': 1}, {'path_full': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000029.1920x1080.jpg?t=1448314295', 'path_thumbnail': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000029.600x338.jpg?t=1448314295', 'id': 2}, {'path_full': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000030.1920x1080.jpg?t=1448314295', 'path_thumbnail': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000030.600x338.jpg?t=1448314295', 'id': 3}, {'path_full': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000031.1920x1080.jpg?t=1448314295', 'path_thumbnail': 'http://cdn.akamai.steamstatic.com/steam/apps/240/0000000031.600x338.jpg?t=1448314295', 'id': 4}]
         """
         if "screenshots" in appdetails:
@@ -268,6 +277,7 @@ class AppDetails:
         """
         price data
         int
+
         {'final': 198000, 'currency': 'JPY', 'initial': 198000, 'discount_percent': 0}
         """
         if "price_overview" in appdetails:
@@ -277,6 +287,7 @@ class AppDetails:
         """
         もっと細かい説明文章
         String
+        日本語語が取りたい
         "THE NEXT INSTALLMENT OF THE WORLD'S # 1 ONLINE ACTION GAME <br>Counter-Strike: Source blends Counter-Strike's award-winning teamplay action with the advanced technology of Source&trade; technology. Featuring state of the art graphics, all new sounds, and introducing physics, Counter-Strike: Source is a must-have for every action gamer."
         """
         if "detailed_description" in appdetails:
@@ -286,7 +297,7 @@ class AppDetails:
         """
         ウェブサイトのurl
         String
-
+        'http://blog.counter-strike.net/'
         """
         if "website" in appdetails:
             self.website = appdetails["website"]
@@ -298,9 +309,9 @@ class AppDetails:
         'full'
         """
         if "controller_support" in appdetails:
-            self.controller_support = appdetails["controller_support"]
+            self.controller_support = True
         else:
-            self.controller_support = {}
+            self.controller_support = False
         """
         プロフィールの映像のurl
         String
@@ -312,6 +323,7 @@ class AppDetails:
             self.movies = {}
         """
         ジャンルを返す
+        ジャンルテーブルを作って
         [{'description': 'Action', 'id': '1'}]
         """
         if "genres" in appdetails:
@@ -327,6 +339,8 @@ class AppDetails:
             self.type = appdetails["type"]
         else:
             self.type = {}
+
+        self.pageurl = "http://cdn.akamai.steamstatic.com/steam/apps/" + str(self.steam_appid)
     """
     def __repr__(self):
         output =  ""%(self.supported_languages, self.categories, self.packages, self.metacritic, self.mac_requirements, self.steam_appid, self.recommendations, self.required_age, self.linux_requirements, self.is_free, self.background, self.name, self.release_date, self.support_info,self.developers, self.platforms, self.publishers, self.type, self.achievements, self.pc_requirements, self.header_image, self.package_groups, self.about_the_game, self.screenshots, self.price_overview, self.detailed_description, self.website, self.controller_support, self.movies, self.genres)

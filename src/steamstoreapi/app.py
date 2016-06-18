@@ -11,7 +11,7 @@ class App:
         applistjson = json.loads(response.read().decode('utf-8'))
         appList = applistjson['applist']['apps']['app']
 
-        return AppList(appList)
+        return appList
 
 class AppList:
     def __init__(self, appList):

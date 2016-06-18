@@ -1,4 +1,4 @@
 __author__ = "TOSUKUi"
 
-from . import steamfirst
+from . import steam
 
