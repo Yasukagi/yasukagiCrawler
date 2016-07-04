@@ -46,9 +46,17 @@ class SteamDao:
                   "steam_type," \
                   "steam_url)"
 
+        try:
+            tdatetime = d.strptime(appdetails.release_date["date"], '%d %b, %Y')
+            release_date = tdatetime.date()
+        except ValueError:
+            try:
+                tdatetime = d.strptime(appdetails.release_date["date"], '%b, %Y')
+                release_date = tdatetime.date()
+            except:
+                tdatetime = None
+                release_date = None
 
-        tdatetime = d.strptime(appdetails.release_date["date"], '%d %b, %Y')
-        release_date = tdatetime.date()
 
 
 
@@ -134,6 +142,8 @@ class SteamDao:
                appdetails.type,
                appdetails.pageurl
                ))
+
+        self.commit()
     def create_table(self):
         sql = "CREATE TABLE yasukagi.steam " \
               "(%s, %s, %s,%s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s, %s)" % \

@@ -47,7 +47,7 @@ class Store:
     """
     def appprices(self, appids):
         time.sleep(1.6)
-        url = 'http://store.steampowered.com/api/appdetails/?appids=' + appids + '&filters=price_overview'
+        url = 'http://store.steampowered.com/api/appdetails/?appids=' + appids + '&filters=price_overview&cc=jp'
         try:
             response = ulr.urlopen(url)
         except ulr.URLError as e:
@@ -281,7 +281,7 @@ class AppDetails:
         {'final': 198000, 'currency': 'JPY', 'initial': 198000, 'discount_percent': 0}
         """
         if "price_overview" in appdetails:
-            self.price_overview = appdetails["price_overview"]
+            self.price_overview = appdetails["price_overview"]/100
         else:
             self.price_overview = {}
         """

@@ -19,15 +19,16 @@ def crowl():
     for i in range(length):
         appids.append(appList[i]["appid"])
     print("価格情報を取得しています")
-    #prices = crowlprices(appids)
+    prices = crowlprices(appids)
 
     prices = ast.literal_eval(f.read())
     games = {}
     print("ゲームの情報を取得しています。")
     for appid in prices:
-        if prices[appid]["success"] == True:
-            appdetails = crowldetails([appid])
-            db.insertDetails(appdetails[appid])
+        if prices[appid]["success"]:
+            if "price_overview" in prices[appid]["data"]:
+                appdetails = crowldetails([appid])
+                db.insertDetails(appdetails[appid])
     db.commit()
 
 
