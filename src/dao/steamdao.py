@@ -1,6 +1,5 @@
 import MySQLdb as msd
 from datetime import datetime as d
-from datetime import date
 
 class SteamDao:
     def __init__(self, user, host):
