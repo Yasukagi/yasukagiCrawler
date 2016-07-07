@@ -59,7 +59,6 @@ class Store:
             apppricesJson = json.loads(response_str.decode("utf-8"))
         except:
             print("json parse error")
-        print(apppricesJson)
         return apppricesJson
 
 """["appid":{"success":, "data":{['supported_languages', 'categories', 'packages', 'metacritic', 'mac_requirements', 'steam_appid', 'recommendations', 'required_age', 'linux_requirements', 'is_free', 'background', 'name', 'release_date', 'support_info', 'developers', 'platforms', 'publishers', 'type', 'achievements', 'pc_requirements', 'header_image', 'package_groups', 'about_the_game', 'screenshots', 'price_overview', 'detailed_description', 'website', 'controller_support', 'movies', 'genres']}}]"""
