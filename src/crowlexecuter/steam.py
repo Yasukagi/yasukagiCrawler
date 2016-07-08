@@ -1,6 +1,7 @@
 import steamstoreapi
 import dao.steamdao as steamdb
 import ast
+import sys
 
 def crowl():
     print("DB:dbに接続")
@@ -20,7 +21,11 @@ def crowl():
     prices = ast.literal_eval(f.read())
     games = {}
     print("ゲームの情報を取得しています。")
+    length = len(prices)
+    count = 0
     for appid in prices:
+        count += 1
+        sys.stdout.write("¥r%d" % count/length)
         if prices[appid]["success"]:
             if "price_overview" in prices[appid]["data"]:
                 appdetails = crowldetails([appid])
@@ -41,11 +46,13 @@ def crowlapps():
     return appList
 
 def crowlprices(appids):
+
     store = steamstoreapi.store.Store()
     appids_part = ""
     length = len(appids)
     prices = dict()
     for i in range(length):
+        sys.stdout.write("¥r%d", i/length)
         appids_part += str(appids[i]) + ","
         if length == 1:
             price = store.appprices(appids=appids_part)
@@ -54,6 +61,7 @@ def crowlprices(appids):
             price = store.appprices(appids=appids_part)
             prices.update(price)
             appids_part = ""
+
     return prices
 
 

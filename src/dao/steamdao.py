@@ -116,6 +116,7 @@ class SteamDao:
                                                                                                                                           appdetails.type,
                                                                                                                                           appdetails.pageurl
                                                                                                                   ))
+        """
         print("(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" %
               (appdetails.steam_appid,
                appdetails.name,
@@ -141,8 +142,10 @@ class SteamDao:
                appdetails.type,
                appdetails.pageurl
                ))
+        """
 
         self.commit()
+
     def create_table(self):
         sql = "CREATE TABLE yasukagi.steam " \
               "(%s, %s, %s,%s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s, %s)" % \
