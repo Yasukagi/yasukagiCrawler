@@ -55,7 +55,9 @@ class SteamDao:
             except:
                 tdatetime = None
                 release_date = None
-
+        except KeyError:
+            tdatetime = None
+            release_date = None
 
 
 
@@ -94,8 +96,8 @@ class SteamDao:
 
         self.cursor.execute(sql + "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (appdetails.steam_appid,
                                                                                                                                           appdetails.name,
-                                                                                                                                          initial,
-                                                                                                                                          final,
+                                                                                                                                          initial/100,
+                                                                                                                                          final/100,
                                                                                                                                           metascore,
                                                                                                                                           mac_requirements,
                                                                                                                                           linux_requirements,

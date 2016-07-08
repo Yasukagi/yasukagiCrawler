@@ -5,7 +5,7 @@ import sys
 
 def crowl():
     print("DB:dbに接続")
-    f = open("/Users/TOSUKUi/ideaProject/yasukagiCrowler/src/crowlexecuter/prices", "r")
+    #f = open("/Users/TOSUKUi/ideaProject/yasukagiCrowler/src/crowlexecuter/prices", "r")
     db = steamdb.SteamDao(user="root", host="localhost")
     print("API:appListにアクセス")
     appList = crowlapps()
@@ -18,14 +18,16 @@ def crowl():
     print("価格情報を取得しています")
     prices = crowlprices(appids)
 
-    prices = ast.literal_eval(f.read())
+    #prices = ast.literal_eval(f.read())
     games = {}
     print("ゲームの情報を取得しています。")
     length = len(prices)
     count = 0
     for appid in prices:
         count += 1
-        sys.stdout.write("¥r%d" % count/length)
+        progress = count/length * 100
+        sys.stdout.write("\r%d" % progress)
+        sys.stdout.flush()
         if prices[appid]["success"]:
             if "price_overview" in prices[appid]["data"]:
                 appdetails = crowldetails([appid])
@@ -52,7 +54,9 @@ def crowlprices(appids):
     length = len(appids)
     prices = dict()
     for i in range(length):
-        sys.stdout.write("¥r%d", i/length)
+        progress = i/length * 100
+        sys.stdout.write("\r%d" % progress)
+        sys.stdout.flush()
         appids_part += str(appids[i]) + ","
         if length == 1:
             price = store.appprices(appids=appids_part)
