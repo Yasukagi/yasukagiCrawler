@@ -55,7 +55,9 @@ class SteamDao:
             except:
                 tdatetime = None
                 release_date = None
-
+        except KeyError:
+            tdatetime = None
+            release_date = None
 
 
 
@@ -94,8 +96,8 @@ class SteamDao:
 
         self.cursor.execute(sql + "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (appdetails.steam_appid,
                                                                                                                                           appdetails.name,
-                                                                                                                                          initial,
-                                                                                                                                          final,
+                                                                                                                                          initial/100,
+                                                                                                                                          final/100,
                                                                                                                                           metascore,
                                                                                                                                           mac_requirements,
                                                                                                                                           linux_requirements,
@@ -116,6 +118,7 @@ class SteamDao:
                                                                                                                                           appdetails.type,
                                                                                                                                           appdetails.pageurl
                                                                                                                   ))
+        """
         print("(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" %
               (appdetails.steam_appid,
                appdetails.name,
@@ -141,8 +144,10 @@ class SteamDao:
                appdetails.type,
                appdetails.pageurl
                ))
+        """
 
         self.commit()
+
     def create_table(self):
         sql = "CREATE TABLE yasukagi.steam " \
               "(%s, %s, %s,%s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s, %s)" % \

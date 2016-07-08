@@ -280,7 +280,7 @@ class AppDetails:
         {'final': 198000, 'currency': 'JPY', 'initial': 198000, 'discount_percent': 0}
         """
         if "price_overview" in appdetails:
-            self.price_overview = appdetails["price_overview"]/100
+            self.price_overview = appdetails["price_overview"]
         else:
             self.price_overview = {}
         """
