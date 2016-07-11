@@ -12,12 +12,20 @@ def crowl():
     #crowlprices(appList)
     store = steamstoreapi.store.Store()
     appids = []
-    length = len(appList)
-    for i in range(length):
-        appids.append(appList[i]["appid"])
+    #length = len(appList)
+    #for i in range(length):
+    #   appids.append(appList[i]["appid"])
     print("価格情報を取得しています")
-    prices = crowlprices(appids)
+    f = open("/Users/TOSUKUi/ideaProject/yasukagiCrowler/list.txt","r")
 
+    for appid in f.readlines():
+        appid = appid.strip()
+        appids.append(appid)
+
+
+    prices = crowlprices(appids)
+    #f.write(str(prices))
+    #f.close()
     #prices = ast.literal_eval(f.read())
     games = {}
     print("ゲームの情報を取得しています。")
@@ -31,7 +39,10 @@ def crowl():
         if prices[appid]["success"]:
             if "price_overview" in prices[appid]["data"]:
                 appdetails = crowldetails([appid])
-                db.insertDetails(appdetails[appid])
+            try:
+                db.insert_details(appdetails[appid])
+            except Exception as e:
+                print("problem occured appid", appid, e, sep=":")
     db.commit()
 
 

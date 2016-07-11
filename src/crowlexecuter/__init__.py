@@ -1,4 +1,4 @@
 __author__ = "TOSUKUi"
 
-from . import steam
+from . import steam_initialize
 
