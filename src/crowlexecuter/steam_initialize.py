@@ -3,10 +3,10 @@ import dao.steamdao as steamdb
 import ast
 import sys
 
-def crowl():
+def crowl(dbpasswd, dbuser):
     appids = []
     print("DB:dbに接続")
-    db = steamdb.SteamDao(user="root", host="localhost", password="root")
+    db = steamdb.SteamDao(host="localhost", user=dbuser, passwd=dbpasswd)
     print("API:appListにアクセス")
     appList = crowlapps()
     #appListをつなげて，価格を取得するメソッドの引数に格納.
