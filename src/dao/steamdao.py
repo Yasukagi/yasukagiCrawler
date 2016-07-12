@@ -6,8 +6,8 @@ yasukagi.steamのデータベースアクセスオブジェクト
 method insert_details, update_prices, create_table
 """
 class SteamDao:
-    def __init__(self, user, host):
-        self.connect = msd.connect(user=user,  host=host)
+    def __init__(self, user, host, password):
+        self.connect = msd.connect(user=user,passwd=password,host=host)
         self.cursor = self.connect.cursor()
         sql = "SHOW CREATE DATABASE yasukagi_db"
         try:
