@@ -9,14 +9,14 @@ class SteamDao:
     def __init__(self, user, host):
         self.connect = msd.connect(user=user,  host=host)
         self.cursor = self.connect.cursor()
-        sql = "SHOW CREATE DATABASE yasukagi"
+        sql = "SHOW CREATE DATABASE yasukagi_db"
         try:
             self.cursor.execute(sql)
         except msd.Error:
-            print("yasukagiが無いから作りますよ")
-            sql = "CREATE DATABASE yasukagi"
+            print("yasukagi_dbが無いから作りますよ")
+            sql = "CREATE DATABASE yasukagi_db"
             self.cursor.execute(sql)
-        sql = "SHOW CREATE TABLE yasukagi.steam_fix"
+        sql = "SHOW CREATE TABLE yasukagi_db.steam"
         try:
             self.cursor.execute(sql)
             print(self.cursor.fetchall())
@@ -128,7 +128,7 @@ class SteamDao:
             recommendations = None
 
 
-        sql = "INSERT INTO yasukagi.steam_fix %s" % (columns)
+        sql = "INSERT INTO yasukagi_db.steam %s" % (columns)
         try:
             self.cursor.execute(sql + "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (appdetails.steam_appid,
                                                                                                                                               appdetails.name,
@@ -158,7 +158,7 @@ class SteamDao:
                                                                                                                                               steam_is_free,
                                                                                                                                               appdetails.pageurl))
         except :
-            self.cursor.execute('DELETE FROM yasukagi.steam_fix WHERE steam_id = %s' % appdetails.steam_appid)
+            self.cursor.execute('DELETE FROM yasukagi_db.steam WHERE steam_id = %s' % appdetails.steam_appid)
             self.cursor.execute(sql + "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (appdetails.steam_appid,
                                                                                                                                               appdetails.name,
                                                                                                                                               initial/100,
@@ -190,7 +190,7 @@ class SteamDao:
 
 
     def create_table(self):
-        sql = "CREATE TABLE yasukagi.steam_fix " \
+        sql = "CREATE TABLE yasukagi_db.steam " \
               "(%s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" % \
               ("steam_id INTEGER PRIMARY KEY  NOT NULL",
                "steam_title TEXT NOT NULL",
@@ -215,7 +215,7 @@ class SteamDao:
                "steam_about_the_game TEXT ",
                "steam_detailed_description TEXT ",
                "steam_website TEXT",
-               "steam_controller_support TEXT",
+               "steam_controller_support BOOLEAN",
                "steam_type TEXT",
                "steam_is_free BOOLEAN",
                "steam_url TEXT",
@@ -227,7 +227,7 @@ class SteamDao:
 
 
     def update_prices(self, initial, final):
-        sql = 'UPDATE yasukagi.steam_fix SET steam_initial_price=%s,steam_final_price=%s' % (initial/100, final/100)
+        sql = 'UPDATE yasukagi_db.steam SET steam_initial_price=%s,steam_final_price=%s' % (initial/100, final/100)
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 

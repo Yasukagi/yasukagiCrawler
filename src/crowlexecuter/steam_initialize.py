@@ -4,30 +4,17 @@ import ast
 import sys
 
 def crowl():
+    appids = []
     print("DB:dbに接続")
-    #f = open("/Users/TOSUKUi/ideaProject/yasukagiCrowler/src/crowlexecuter/prices", "r")
     db = steamdb.SteamDao(user="root", host="localhost")
     print("API:appListにアクセス")
     appList = crowlapps()
-    #crowlprices(appList)
-    store = steamstoreapi.store.Store()
-    appids = []
-    #length = len(appList)
-    #for i in range(length):
-    #   appids.append(appList[i]["appid"])
-    print("価格情報を取得しています")
-    f = open("/Users/TOSUKUi/ideaProject/yasukagiCrowler/list.txt","r")
-
-    for appid in f.readlines():
-        appid = appid.strip()
-        appids.append(appid)
-
-
+    #appListをつなげて，価格を取得するメソッドの引数に格納.
+    length = len(appList)
+    for i in range(length):
+        appids.append(appList[i]["appid"])
     prices = crowlprices(appids)
-    #f.write(str(prices))
-    #f.close()
-    #prices = ast.literal_eval(f.read())
-    games = {}
+    #pricesのうち，gameとして認識できるものに関して，情報を取得していく
     print("ゲームの情報を取得しています。")
     length = len(prices)
     count = 0
@@ -39,27 +26,24 @@ def crowl():
         if prices[appid]["success"]:
             if "price_overview" in prices[appid]["data"]:
                 appdetails = crowldetails([appid])
-            try:
-                db.insert_details(appdetails[appid])
-            except Exception as e:
-                print("problem occured appid", appid, e, sep=":")
+                try:
+                    db.insert_details(appdetails[appid])
+                except Exception as e:
+                    print("problem occured appid", appid, e, sep=":")
     db.commit()
 
-
-
-
-    #appdetail = store.appdetails("730")
-    #print(appList)
-    #print(appdetail.developers)
 
 
 def crowlapps():
     app = steamstoreapi.app.App()
     appList = app.applist()
     return appList
-
+"""
+価格を取得してくるメソッド.
+@:param appids appidのリスト
+@:return prices [appid:{priceデータ},...]の形のdictオブジェクト
+"""
 def crowlprices(appids):
-
     store = steamstoreapi.store.Store()
     appids_part = ""
     length = len(appids)
@@ -80,7 +64,11 @@ def crowlprices(appids):
     return prices
 
 
-
+"""
+@:param appids appidのリスト
+@:return details AppDetailsオブジェクト
+appidをリストとして渡すと，appdetailsオブジェクトがリストとして返ってくる
+"""
 def crowldetails(appids):
     store = steamstoreapi.store.Store()
     details = {}
