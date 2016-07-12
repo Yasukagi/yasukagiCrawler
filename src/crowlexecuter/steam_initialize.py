@@ -6,7 +6,7 @@ import sys
 def crowl(dbpasswd, dbuser):
     appids = []
     print("DB:dbに接続")
-    db = steamdb.SteamDao(host="localhost", user=dbuser, passwd=dbpasswd)
+    db = steamdb.SteamDao(host="localhost", user=dbuser, password=dbpasswd)
     print("API:appListにアクセス")
     appList = crowlapps()
     #appListをつなげて，価格を取得するメソッドの引数に格納.
