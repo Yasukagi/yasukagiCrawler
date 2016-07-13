@@ -60,6 +60,8 @@ class SteamDao:
                   "steam_is_free," \
                   "steam_url)"
 
+
+
         try:
             tdatetime = d.strptime(appdetails.release_date["date"], '%d %b, %Y')
             release_date = tdatetime.date()
@@ -191,9 +193,9 @@ class SteamDao:
 
     def create_table(self):
         sql = "CREATE TABLE yasukagi_db.steam " \
-              "(%s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" % \
+              "(%s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ENGINE=InnoDB DEFAULT CHARSET=utf8" % \
               ("steam_id INTEGER PRIMARY KEY  NOT NULL",
-               "steam_title TEXT NOT NULL",
+               "steam_title TEXT NOT NULL ",
                "steam_initial_price NUMERIC(15,2)",
                "steam_final_price NUMERIC(15,2)",
                "steam_metacritic INT",
@@ -219,7 +221,7 @@ class SteamDao:
                "steam_type TEXT",
                "steam_is_free BOOLEAN",
                "steam_url TEXT",
-               "steam_timestamp timestamp NULL DEFAULT CURRENT_TIMESTAMP"
+               "timestamp timestamp NULL DEFAULT CURRENT_TIMESTAMP"
                )
         self.cursor.execute(sql)
         self.connect.commit()
