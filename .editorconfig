@@ -10,4 +10,7 @@ charset = utf-8 #文字コード
 indent_style = space #tab or space
 indent_size = 2
 insert_final_newline = true #最後に絶対に改行を含める
-trim_trailing_whitespace = true #無駄な空白がなくなる
+trim_trailing_whitespace = true #行末の空白がなくなる
+
+[*.md]
+trim_trailing_whitespace = false
